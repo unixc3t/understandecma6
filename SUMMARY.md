@@ -2,4 +2,4 @@
 
 
 * [引言](README.md)
-* [代码绑定](chapter1/)
+* [块级绑定](chapter1/block_bindings.md)
