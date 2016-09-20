@@ -102,5 +102,36 @@ let声明语法和 var语法一样, 你可以使用let替换var去声明一个�
     // syntax error: missing initialization
     const name;
 
-这个maxItems在绑定的时候初始化,所以这个const声明工作没有问题,然而这个name百年给定引起一个
+这个maxItems在绑定的时候初始化,所以这个const声明工作没有问题,然而这个name绑定会引起一个
 语法错误,因为没有在声明的时候初始化
+
+
+###### Constants vs. let Declarations
+
+常量声明和let声明一样都是块级声明,这意味着常量不会被允许访问超过所声明的块级作用域,并且声明也不会被提升.看下面事例
+
+    if (condition) {
+        const maxItems = 5;
+        // more code
+    }
+    // maxItems isn't accessible here
+
+在这个代码里,常量maxItems被声明在一个if语句块里,在这个语句块执行完,maxItems不允许在块外面访问.
+
+另一点类似let的是,一个常量声明使用在同一作用域里已经声明的变量会抛出一个错误,这个和是否变量被使用var(全局作用域或者函数作用域)或者let(块级作用域)无关,看下面例子
+
+    var message = "Hello!";
+    let age = 25;
+    // each of these throws an error
+    const message = "Goodbye!";
+    const age = 30;
+
+如果这两个常量单独声明是有效的,但是在这个例子里,前面已经有了var和let声明,所有这的语法声明是错误的.
+
+虽然有这些相似之处,这里还是有一个重要的不同在let和const之间 ,尝试分配一个值给一个已经声明过得常量将会抛出一个错误,不管是在严格模式还是非严格模式
+
+    const maxItems = 5;
+    // throws an error
+    maxItems = 6;
+
+在尝试分配给一个声明过得常量之后,大多数语言不会存储这个新分配的值,但是这个值可以存放一个被修改的对象
