@@ -66,3 +66,41 @@ let声明语法和 var语法一样, 你可以使用let替换var去声明一个�
 这个getValue函数行为更像你期望的其他C类语言那样 ,因为变量value被let声明 替代了var, 这个let声明不会导致提升到函数顶部, 这个变量的值也不允许在if语句块之外访问 if condition执行结果为false,那么value永远不会被声明或者初始化
 
 ###### 不要重复声明
+
+如果一个标识符在一个作用域内已经被定义了,再使用let声明这个标识符在同样的作用域会抛出错误,
+看下面例子
+
+         var count = 30;
+
+         // thorw an errors
+         let count  = 40;
+
+在这个例子里,count被声明了2次,一次使用 var,一次使用let,因为let不会重新定义一个已经存在的标识符,
+在同一个作用域里. let声明会抛出一个错误.
+相反,如果let创建一个新的变量使用同样的名字在它自己的作用域就不会抛出错误.看下面演示:
+
+        var count = 30;
+
+        if (contition) {
+            //doesn't thorw an error
+            let count = 40;
+
+            // more code
+        }
+
+这个 let声明没有抛出一个错误,因为他创建了一个新的变量叫做count 在if语句块里,
+替代了刚才var创建count的语句块,在if块内覆盖了全局的count,阻止访问全局count,
+直到运行到if语句块外
+
+###### 常量声明
+
+在Ecma6中你可以使用const声明语法定义绑定, 使用const绑定声明被认为是常量,意味着他的值一旦设置
+就不会改变,因为这个原因每个const绑定必须在声明的时候初始化 看下面例子
+
+    // valid constant
+    const maxItems = 30;
+    // syntax error: missing initialization
+    const name;
+
+这个maxItems在绑定的时候初始化,所以这个const声明工作没有问题,然而这个name百年给定引起一个
+语法错误,因为没有在声明的时候初始化
